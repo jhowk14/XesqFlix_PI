@@ -1,6 +1,7 @@
 import { signOut } from 'next-auth/react';
 import React from 'react';
 import useCurrentUser from '@/hooks/useCurrentUser';
+import Link from 'next/link';
 
 const images = [
   '/images/admin.png',
@@ -37,6 +38,16 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
       <div onClick={() => signOut()} className="px-3 text-center text-white text-sm hover:underline">
         Sair do XesqFlix
       </div>
+      <div className="px-3 text-center text-white text-sm hover:underline">
+        <Link href="/update-profile"> 
+        Atualizar Perfil
+        </Link>
+      </div>
+      {currentUser?.admin ? <div className="px-3 text-center text-white text-sm hover:underline">
+        <Link href="/create-movie"> 
+        Castrar Filme
+        </Link>
+      </div> : ""}
     </div>
   )
 }

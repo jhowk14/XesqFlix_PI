@@ -54,7 +54,7 @@ const Navbar = () => {
         <img src="/images/logo.png" className="h-24 hidden lg:block" alt="Logo" />
         <img src="/favicon.ico" className="h-7 lg:hidden" alt="Logo" />
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
-          <NavbarItem label="Home" active />
+          <NavbarItem label="Home" active href='/' />
           <NavbarItem label="Series" />
           <NavbarItem label="Films" />
           <NavbarItem label="New & Popular" />

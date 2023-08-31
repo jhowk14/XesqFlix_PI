@@ -1,8 +1,6 @@
-import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from 'bcrypt';
 
-const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'PUT') {
@@ -12,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const updateUser = await prisma.user.update({
+    const updateUser = await prismadb.user.update({
         where: {
           id: String(id)
         },

@@ -21,6 +21,16 @@ export const ourFileRouter = {
  
 
     }),
+    videoUpload: f({
+      video: { maxFileSize: "1024GB", maxFileCount: 1}
+    })
+      // Set permissions and file types for this FileRoute
+      .onUploadComplete(async ({ file }) => {
+        // This code RUNS ON YOUR SERVER after upload
+        console.log("Upload complete for movieId:", file.url);
+   
+  
+      }),
 
   imageUpload: f({
     image: { maxFileSize: "32MB", maxFileCount: 4 },

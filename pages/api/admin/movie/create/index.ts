@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+
 import { NextApiRequest, NextApiResponse } from 'next';
 
-const prisma = new PrismaClient();
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const { description, genre, duration, thumbnailUrl, title, videoUrl } = req.body;
 
-    const creteMovie = await prisma.movie.create({
+    const creteMovie = await prismadb.movie.create({
         data: {
             description,
             genre,

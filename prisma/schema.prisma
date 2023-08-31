@@ -23,6 +23,7 @@ model User {
   sessions Session[]
   accounts Account[]
   favoriteIds String[] @db.ObjectId
+  admin Boolean?
 }
 
 model Account {
