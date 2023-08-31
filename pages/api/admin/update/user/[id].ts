@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   if (req.method === 'PUT') {
     try {
     const { id } = req.query
-    const { email, name, password } = req.body;
+    const { email, name, password, image } = req.body;
       
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -17,10 +17,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           id: String(id)
         },
         data: {
-            email,
             name,
             hashedPassword,
-            image: '',
+            image,
             emailVerified: new Date(),
           }
       })

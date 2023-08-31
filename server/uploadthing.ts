@@ -1,5 +1,6 @@
 import serverAuth from "@/libs/serverAuth";
 import { User } from "@prisma/client";
+
  
 import { createUploadthing, type FileRouter } from "uploadthing/next-legacy";
  
@@ -8,61 +9,17 @@ const f = createUploadthing();
 // FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
- 
-  videoUpload: f({
-    video: { maxFileSize: "1024GB"}
-  })
-    // Set permissions and file types for this FileRoute
-    .middleware(async ({ req, res }) => {
-      // This code runs on your server before upload
-      const movie = ""
- 
-      // If you throw, the movie will not be able to upload
-      if (!movie) throw new Error("Unauthorized");
- 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { movieId: movie };
-    })
-    .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for movieId:", metadata.movieId);
- 
-      await prismadb.movie.update({
-        where: {
-          id: metadata.movieId // Corrigido para metadata.movieId
-        },
-        data: {
-          videoUrl: file.url
-        }
-      }).then(response => console.log(response));
-    }),
 
   videoImageUpload: f({
-    image: { maxFileSize: "32MB"}
+    image: { maxFileSize: "32MB", maxFileCount: 1},
+    video: { maxFileSize: "1024GB", maxFileCount: 1}
   })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req, res }) => {
-      // This code runs on your server before upload
-      const movie = ""
- 
-      // If you throw, the movie will not be able to upload
-      if (!movie) throw new Error("Unauthorized");
- 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
-      return { movieId: movie};
-    })
-    .onUploadComplete(async ({ metadata, file }) => {
+    .onUploadComplete(async ({ file }) => {
       // This code RUNS ON YOUR SERVER after upload
-      console.log("Upload complete for movieId:", metadata.movieId);
+      console.log("Upload complete for movieId:", file.url);
  
-      await prismadb.movie.update({
-        where: {
-          id: metadata.movieId // Corrigido para metadata.userId
-        },
-        data: {
-          thumbnailUrl: file.url
-        }
-      }).then(response => console.log(response));
+
     }),
 
   imageUpload: f({
@@ -71,7 +28,7 @@ export const ourFileRouter = {
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req, res }) => {
       // This code runs on your server before upload
-      const user = await serverAuth(req, res) as { currentUser: User };
+      const user = await serverAuth(req, res) as { currentUser: User}
  
       // If you throw, the user will not be able to upload
       if (!user) throw new Error("Unauthorized");
@@ -90,7 +47,7 @@ export const ourFileRouter = {
         data: {
           image: file.url
         }
-      }).then(response => console.log(response));
+      }).then(Response => console.log(Response));
     }),
 } satisfies FileRouter;
  
