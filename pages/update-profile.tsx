@@ -35,10 +35,12 @@ export default function Home() {
     fileKey: string;
   }[]>([]);
 
+  const fileUrl = images.map(image => image.fileUrl)
+
 const data = {
             name: name,
             password,
-            image: images[0].fileUrl,
+            image: fileUrl[0],
 }
 
   const updateUser = async () => {
@@ -69,7 +71,6 @@ const data = {
     }
   };
   
-  const fileUrl = images.map(image => image.fileUrl)
   return (<>
     <Navbar />
     <div className="flex justify-center items-center h-screen">   
