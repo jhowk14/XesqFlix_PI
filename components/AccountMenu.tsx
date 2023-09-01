@@ -45,7 +45,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
       </div>
       {currentUser?.admin ? <div className="px-3 text-center text-white text-sm hover:underline">
         <Link href="/create-movie"> 
-        Castrar Filme
+        Cadastrar Filme
         </Link>
       </div> : ""}
     </div>

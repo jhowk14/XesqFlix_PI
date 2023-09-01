@@ -75,9 +75,9 @@ export default function Home() {
     <>
       <Navbar />
       <div className="flex justify-center items-center h-screen">   
-        <div className="bg-black bg-opacity-70 px-16 py-16 lg:max-w-md rounded-md w-full">
+        <div className="bg-black bg-opacity-70 px-10 py-10 lg:max-w-md rounded-md w-full">
           <div className="flex flex-col gap-4">
-            <div className="rounded-md flex items-center justify-center border-2 gap-4 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
+            <div className="rounded-md flex items-center justify-center gap-3 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
               <UploadButton
                 endpoint="videoImageUpload"
                 content={{

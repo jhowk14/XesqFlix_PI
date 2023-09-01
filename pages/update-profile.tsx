@@ -79,12 +79,12 @@ export default function Home() {
     <>
       <Navbar />
       <div className="flex justify-center items-center h-screen">   
-        <div className="bg-black bg-opacity-70 px-16 py-16 lg:max-w-md rounded-md w-full">
-          <div className="flex flex-col gap-4">
-            <div className="rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
+        <div className="bg-black bg-opacity-70 px-6 py-6 lg:max-w-md rounded-md w-full">
+          <div className="flex flex-col gap-3">
+            <div className="rounded-md flex items-center justify-center border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
               <img
                 draggable={false}
-                className="w-36 h-36 rounded-full object-cover m-4"
+                className="w-20 h-20 rounded-full object-cover m-4"
                 src={fileUrl[0] || currentUser?.image}
                 alt=""
               />
