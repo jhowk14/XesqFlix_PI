@@ -28,9 +28,12 @@ export async function getServerSideProps(context: NextPageContext) {
 export default function Home() {
   const { data: currentUser } = useCurrentUser();
 
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    password: '',
+    passwordConfirm: '',
+  });
+
   const [images, setImages] = useState<{
     fileUrl: string;
     fileKey: string;
@@ -39,13 +42,13 @@ export default function Home() {
   const fileUrl = images.map(image => image.fileUrl);
 
   const updateUser = useCallback(async () => {
-    if (!name || !password || name === "" || password === "") {
+    if (!formData.name || !formData.password || formData.name === "" || formData.password === "") {
       window.location.href = '/';
     } else {
       try {
         const data = {
-          name: name,
-          password,
+          name: formData.name,
+          password: formData.password,
           image: fileUrl[0],
         };
 
@@ -70,73 +73,93 @@ export default function Home() {
       }
     }
     setImages([])
-    setName("")
-    setPassword("")
-    setPasswordConfirm("")
-  }, [name, password, fileUrl, currentUser?.id]);
+    setFormData({
+      name: '',
+      password: '',
+      passwordConfirm: '',
+    });
+  }, [formData, fileUrl, currentUser?.id]);
   
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    updateUser();
+  };
+
   return (
     <>
       <Navbar />
       <div className="flex justify-center items-center h-screen">   
         <div className="bg-black bg-opacity-70 px-6 py-6 lg:max-w-md rounded-md w-full">
-          <div className="flex flex-col gap-3">
-            <div className="rounded-md flex items-center justify-center border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
-              <img
-                draggable={false}
-                className="w-20 h-20 rounded-full object-cover m-4"
-                src={fileUrl[0] || currentUser?.image}
-                alt=""
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-3">
+              <div className="rounded-md flex items-center justify-center border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
+                <img
+                  draggable={false}
+                  className="w-20 h-20 rounded-full object-cover m-4"
+                  src={fileUrl[0] || currentUser?.image}
+                  alt=""
+                />
+                <UploadButton
+                  endpoint="imageUpload"
+                  content={{
+                    button: "Imagem de Perfil",
+                  }}
+                  appearance={{
+                    button: {
+                      // Customize the button appearance
+                      backgroundColor: '#E32636',
+                    },
+                  }}
+                  onClientUploadComplete={(res) => {
+                    if (res) {
+                      setImages(res);
+                      const json = JSON.stringify(res);
+                      console.log(json);
+                    }
+                  }}
+                  onUploadError={(error: Error) => {
+                    // Handle upload error
+                    alert(`ERROR! ${error.message}`);
+                  }}
+                />
+              </div>
+              <Input
+                id="name"
+                type="text"
+                name="name"
+                label="Usuario"
+                value={formData.name}
+                onChange={handleInputChange}
               />
-              <UploadButton
-                endpoint="imageUpload"
-                content={{
-                  button: "Imagem de Perfil",
-                }}
-                appearance={{
-                  button: {
-                    // Customize the button appearance
-                    backgroundColor: '#E32636',
-                  },
-                }}
-                onClientUploadComplete={(res) => {
-                  if (res) {
-                    setImages(res);
-                    const json = JSON.stringify(res);
-                    console.log(json);
-                  }
-                }}
-                onUploadError={(error: Error) => {
-                  // Handle upload error
-                  alert(`ERROR! ${error.message}`);
-                }}
+              <Input
+                type="password"
+                id="password"
+                name="password"
+                label="Senha"
+                value={formData.password}
+                onChange={handleInputChange}
               />
+              <Input
+                type="password"
+                id="password_confirmation"
+                name="passwordConfirm"
+                label="Confirme a Senha"
+                value={formData.passwordConfirm}
+                onChange={handleInputChange}
+              />
+              <button type="submit" className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+                Atualizar Perfil
+              </button>
             </div>
-            <Input
-              id="name"
-              type="text"
-              label="Usuario"
-              value={name}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-            />
-            <Input
-              type="password"
-              id="password"
-              label="Senha"
-              value={password}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
-            />
-            <Input
-              type="password"
-              id="password_confirmation"
-              label="Confirme a Senha"
-              value={passwordConfirm}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPasswordConfirm(e.target.value)}
-            />
-            <button onClick={updateUser} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
-              Atualizar Perfil
-            </button>
-          </div>
+          </form>
         </div>
       </div>
     </>
