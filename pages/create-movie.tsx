@@ -5,6 +5,7 @@ import '@uploadthing/react/styles.css';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
+import axios from 'axios';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -39,33 +40,35 @@ export default function Home() {
 
   const createMovie = useCallback(async () => {
     try {
-      const response = await fetch(`/api/admin/movie/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          description,
-          genre,
-          duration,
-          thumbnailUrl: images[0].fileUrl,
-          videoUrl: video[0].fileUrl
-        }),
+      const response = await axios.post(`/api/admin/movie/create`, {
+        title,
+        description,
+        genre,
+        duration,
+        thumbnailUrl: images[0].fileUrl,
+        videoUrl: video[0].fileUrl
       });
 
-      if (response.ok) {
-        // Successful update
+      if (response.status === 200) {
+        // Successful creation
         window.location.href = '/'; // Redirect to home page
       } else {
         // Handle error response
-        const errorMessage = await response.text();
+        const errorMessage = response.data.message; // Ajuste com base na estrutura da resposta da API
         alert(`Error: ${errorMessage}`);
       }
     } catch (error) {
       console.log(error);
-      alert('An error occurred while updating the profile.');
+      alert('An error occurred while creating the movie.');
     }
+    
+    // Limpar os campos após a criação
+    setDescription("");
+    setDuration("");
+    setGenre("");
+    setTitle("");
+    setImages([]);
+    setVideo([]);
   }, [title, description, genre, duration, images, video]);
 
   return (

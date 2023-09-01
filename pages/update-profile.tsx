@@ -6,6 +6,7 @@ import '@uploadthing/react/styles.css';
 import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
+import axios from 'axios';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -48,20 +49,19 @@ export default function Home() {
           image: fileUrl[0],
         };
 
-        const response = await fetch(`/api/admin/update/user/${currentUser?.id}`, {
-          method: 'PUT',
+        // Use o Axios para fazer a requisição PUT
+        const response = await axios.put(`/api/admin/update/user/${currentUser?.id}`, data, {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
         });
-    
-        if (response.ok) {
+
+        if (response.status === 200) {
           // Successful update
           window.location.href = '/'; // Redirect to home page
         } else {
           // Handle error response
-          const errorMessage = await response.text();
+          const errorMessage = response.data.message; // Você deve ajustar isso com base na estrutura da resposta da sua API
           alert(`Error: ${errorMessage}`);
         }
       } catch (error) {
@@ -69,6 +69,10 @@ export default function Home() {
         alert('An error occurred while updating the profile.');
       }
     }
+    setImages([])
+    setName("")
+    setPassword("")
+    setPasswordConfirm("")
   }, [name, password, fileUrl, currentUser?.id]);
   
   return (
