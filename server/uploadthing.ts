@@ -12,7 +12,6 @@ export const ourFileRouter = {
 
   videoImageUpload: f({
     image: { maxFileSize: "32MB", maxFileCount: 1},
-    video: { maxFileSize: "1024GB", maxFileCount: 1}
   })
     // Set permissions and file types for this FileRoute
     .onUploadComplete(async ({ file }) => {
@@ -50,14 +49,6 @@ export const ourFileRouter = {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
  
-      await prismadb.user.update({
-        where: {
-          id: metadata.userId // Corrigido para metadata.userId
-        },
-        data: {
-          image: file.url
-        }
-      }).then(Response => console.log(Response));
     }),
 } satisfies FileRouter;
  

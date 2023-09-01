@@ -35,7 +35,11 @@ export default function Home() {
     fileKey: string;
   }[]>([]);
 
-
+const data = {
+            name: name,
+            password,
+            image: images[0].fileUrl,
+}
 
   const updateUser = async () => {
     if(!name || !password || name == "" || password == ""){
@@ -47,10 +51,7 @@ export default function Home() {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            name: name,
-            password,
-          }),
+          body: JSON.stringify(data),
         });
     
         if (response.ok) {
