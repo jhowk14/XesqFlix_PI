@@ -40,7 +40,7 @@ export default function Home() {
 
   const createMovie = useCallback(async () => {
     try {
-      const response = await axios.post(`/api/admin/movie/create`, {
+      const response = await axios.post(`https://xesq-flix-pi-jhowk14.vercel.app/api/admin/movie/create`, {
         title,
         description,
         genre,

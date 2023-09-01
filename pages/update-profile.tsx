@@ -50,7 +50,7 @@ export default function Home() {
         };
 
         // Use o Axios para fazer a requisição PUT
-        const response = await axios.put(`/api/admin/update/user/${currentUser?.id}`, data, {
+        const response = await axios.put(`https://xesq-flix-pi-jhowk14.vercel.app/api/admin/update/user/${currentUser?.id}`, data, {
           headers: {
             'Content-Type': 'application/json',
           },
