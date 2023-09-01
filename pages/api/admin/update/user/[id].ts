@@ -29,6 +29,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     } catch (error) {
       return res.status(500).json({
         error: 'Ocorreu um erro ao obter os usuários.',
+        tipo: error
       });
 
     }
