@@ -5,6 +5,7 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import AccountMenu from '@/components/AccountMenu';
 import MobileMenu from '@/components/MobileMenu';
 import NavbarItem from '@/components/NavbarItem';
+import Link from 'next/link';
 
 const images = [
   '/images/admin.png',
@@ -51,8 +52,10 @@ const Navbar = () => {
   return (
     <nav className="w-full fixed z-40">
       <div className={`px-4 md:px-16 py-6 flex flex-row items-center transition duration-500 ${showBackground ? 'bg-zinc-900 bg-opacity-90' : ''}`}>
-        <img src="/images/logo.png" className="h-24 hidden lg:block" alt="Logo" />
+        <Link href="/">
+        <img src="/images/logo.png" className="h-24 hidden lg:block" alt="Logo" />   
         <img src="/favicon.ico" className="h-7 lg:hidden" alt="Logo" />
+        </Link>
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <NavbarItem label="Home" active href='/' />
           <NavbarItem label="Series" href='/'/>
