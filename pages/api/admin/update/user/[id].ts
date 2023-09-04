@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'POST') {
+  if (req.method === 'PUT') {
     try {
     const { id } = req.query
     const { name, password, image } = req.body;
