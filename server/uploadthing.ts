@@ -48,13 +48,6 @@ export const ourFileRouter = {
     .onUploadComplete(async ({ metadata, file }) => {
       // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
-      prismadb.user.update({
-        where: {
-          id: metadata.userId,
-        },data:{
-          image: file.url
-        }
-      }).then(Response => console.log(Response))
  
     }),
 } satisfies FileRouter;
