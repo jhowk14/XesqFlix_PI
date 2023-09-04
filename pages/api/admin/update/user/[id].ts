@@ -1,42 +1,42 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from "next";
+import prismadb from '@/libs/prismadb';
 import bcrypt from 'bcrypt';
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'PUT') {
-    try {
-    const { id } = req.query
+  try {
+    if (req.method !== 'PUT') {
+      return res.status(405).end();
+    }
+
+    
+    const { id } = req.query;
     const { name, password, image } = req.body;
       
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const updateUser = await prismadb.user.update({
-        where: {
-          id: String(id)
-        },
-        data: {
-            name,
-            hashedPassword,
-            image,
-            emailVerified: new Date(),
-          }
-      })
-
-      return res.status(200).json({
-        data: updateUser,
-      });
-
-    } catch (error) {
-      return res.status(500).json({
-        error: 'Ocorreu um erro ao obter os usuários.',
-        tipo: error
-      });
-
+    if (typeof id !== 'string') {
+      throw new Error('Invalid Id');
     }
-  } 
-  else {
-    return res.status(405).json({
-      error: 'Método não permitido.',
+
+    if (!id) {
+      throw new Error('Missing Id');
+    }
+
+    const movies = await prismadb.user.update({
+      where: {
+        id: id
+      },
+      data: {
+          name,
+          hashedPassword,
+          image,
+          emailVerified: new Date(),
+        }
     });
+
+    return res.status(200).json(movies);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).end();
   }
 }
