@@ -53,7 +53,7 @@ export default function Home() {
         };
 
         // Use o Axios para fazer a requisição PUT
-        const response = await axios.post(`/api/admin/update/user/${currentUser?.id}`, data, {
+        const response = await axios.put(`/api/admin/update/user/${currentUser?.id}`, data, {
           headers: {
             'Content-Type': 'application/json',
           },
