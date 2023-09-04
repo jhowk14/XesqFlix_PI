@@ -107,15 +107,19 @@ export default function Home() {
                   src={fileUrl[0] || currentUser?.image}
                   alt=""
                 />
+                <div className='grid grid-cols-1 gap-2'>
+                <button className="bg-red-600 py-2 text-white rounded-md w-full mt-7 hover:bg-red-700 transition">
+                  Escolher avatar
+                </button>
                 <UploadButton
                   endpoint="imageUpload"
                   content={{
-                    button: "Imagem de Perfil",
+                    button: "Enviar Imagem",
                   }}
                   appearance={{
                     button: {
                       // Customize the button appearance
-                      backgroundColor: '#E32636',
+                      backgroundColor: '#DC2626',
                     },
                   }}
                   onClientUploadComplete={(res) => {
@@ -130,7 +134,10 @@ export default function Home() {
                     alert(`ERROR! ${error.message}`);
                   }}
                 />
-              </div>
+                
+                </div>
+                </div>
+                
               <Input
                 id="name"
                 type="text"

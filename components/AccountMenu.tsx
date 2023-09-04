@@ -4,12 +4,10 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 import Link from 'next/link';
 
 const images = [
-  '/images/admin.png',
-  '/images/digao.png',
-  '/images/jhow.png',
-  '/images/moy.png',
-  '/images/raul.png',
-  '/images/Wincler.png'
+  '/images/default-1.png',
+  '/images/default-3.png',
+  '/images/default-2.png',
+  '/images/default-4.png'
 ]
 
 interface AccountMenuProps {
@@ -43,6 +41,11 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
       <div className="px-3 text-center text-white text-sm hover:underline">
         <Link href="/update-profile"> 
         Atualizar Perfil
+        </Link>
+      </div>
+      <div className="px-3 text-center text-white text-sm hover:underline">
+        <Link href="/profiles"> 
+        Perfil
         </Link>
       </div>
       {currentUser?.admin ? <div className="px-3 text-center text-white text-sm hover:underline">
