@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     
     const { id } = req.query;
-    const { name, password, image } = req.body;
+    const { name, password, image, admin } = req.body;
       
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -30,6 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           name,
           hashedPassword,
           image,
+          admin,
           emailVerified: new Date(),
         }
     });
