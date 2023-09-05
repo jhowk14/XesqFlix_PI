@@ -9,13 +9,13 @@ const images = [
   '/images/default-2.png',
   '/images/default-4.png'
 ]
+const imgSrc = images[Math.floor(Math.random() * 4)];
 
 interface AccountMenuProps {
   visible?: boolean;
 }
 
 
-const imgSrc = images[Math.floor(Math.random() * 4)];
 
 const AccountMenu: React.FC<AccountMenuProps> = ({ visible }) => {
   const { data: currentUser } = useCurrentUser();

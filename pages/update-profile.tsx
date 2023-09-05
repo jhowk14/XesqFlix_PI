@@ -7,6 +7,19 @@ import { NextPageContext } from 'next';
 import { getSession } from 'next-auth/react';
 import Navbar from '@/components/Navbar';
 import axios from 'axios';
+import AvatarModal from '@/components/AvatarModal';
+
+const SrcImages = [
+  '/images/default-1.png',
+  '/images/default-3.png',
+  '/images/default-2.png',
+  '/images/default-4.png',
+  '/images/digao.png',
+  '/images/moy.png',
+  '/images/raul.png',
+  '/images/Winckler.png',
+  '/images/jhow.png'
+]
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -27,7 +40,9 @@ export async function getServerSideProps(context: NextPageContext) {
 
 export default function Home() {
   const { data: currentUser } = useCurrentUser();
-
+  const [isAvatarModalOpen, setIsAvatarModalOpen] = useState(false);
+  const [ imageUrl, setImageUrl] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     password: '',
@@ -39,17 +54,18 @@ export default function Home() {
     fileKey: string;
   }[]>([]);
 
-  const fileUrl = images.map(image => image.fileUrl);
-
   const updateUser = useCallback(async () => {
+    if(formData.password !== formData.passwordConfirm){
+      alert("Senhas incompativeis")
+    }
     if (!formData.name || !formData.password || formData.name === "" || formData.password === "") {
-      window.location.href = '/';
+      alert("preencha todos os campos para atualizar")
     } else {
       try {
         const data = {
           name: formData.name,
           password: formData.password,
-          image: fileUrl[0],
+          image: imageUrl,
         };
 
         // Use o Axios para fazer a requisição PUT
@@ -78,7 +94,7 @@ export default function Home() {
       password: '',
       passwordConfirm: '',
     });
-  }, [formData, fileUrl, currentUser?.id]);
+  }, [formData, currentUser?.id, imageUrl]);
   
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -103,14 +119,33 @@ export default function Home() {
               <div className="rounded-md flex items-center justify-center border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden">
                 <img
                   draggable={false}
+                  
                   className="w-20 h-20 rounded-full object-cover m-4"
-                  src={fileUrl[0] || currentUser?.image}
+                  src={imageUrl ||currentUser?.image}
                   alt=""
                 />
+
                 <div className='grid grid-cols-1 gap-2'>
-                <button className="bg-red-600 py-2 text-white rounded-md w-full mt-7 hover:bg-red-700 transition">
-                  Escolher avatar
-                </button>
+                <button
+                type="button"
+        className="bg-red-600 py-2 text-white rounded-md w-full mt-7 hover:bg-red-700 transition"
+        onClick={() => setIsAvatarModalOpen(true)}
+      >
+        Escolher avatar
+      </button>
+
+      <AvatarModal
+        isOpen={isAvatarModalOpen}
+        avatars={SrcImages}
+        selectedAvatar={selectedAvatar}
+        onClose={() => setIsAvatarModalOpen(false)}
+        onSelectAvatar={(avatar) => {
+          setSelectedAvatar(avatar);
+          setImageUrl(avatar)
+          setIsAvatarModalOpen(false)
+          console.log(selectedAvatar)
+        }}
+      />
                 <UploadButton
                   endpoint="imageUpload"
                   content={{
@@ -122,9 +157,10 @@ export default function Home() {
                       backgroundColor: '#DC2626',
                     },
                   }}
-                  onClientUploadComplete={(res) => {
+                  onClientUploadComplete={(res: any) => {
                     if (res) {
                       setImages(res);
+                      images.map((image) => setImageUrl(image.fileUrl));
                       const json = JSON.stringify(res);
                       console.log(json);
                     }
@@ -150,7 +186,7 @@ export default function Home() {
                 type="password"
                 id="password"
                 name="password"
-                label="Senha"
+                label="Senha ou Senha Nova"
                 value={formData.password}
                 onChange={handleInputChange}
               />

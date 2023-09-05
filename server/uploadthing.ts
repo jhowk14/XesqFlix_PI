@@ -32,7 +32,7 @@ export const ourFileRouter = {
       }),
 
   imageUpload: f({
-    image: { maxFileSize: "32MB", maxFileCount: 4 },
+    image: { maxFileSize: "32MB", maxFileCount: 1 },
   })
     // Set permissions and file types for this FileRoute
     .middleware(async ({ req, res }) => {

@@ -1,6 +1,7 @@
 import { NextPageContext } from "next";
 import { getSession, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import Link from 'next/link';
 import { useCallback } from "react";
 
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -54,16 +55,24 @@ const App = () => {
   const selectProfile = useCallback(() => {
     router.push('/');
   }, [router]);
+  const updateRote = useCallback(() => {
+    router.push('/update-profile');
+  }, [router]);
 
   return (
     <div className="flex items-center h-full justify-center">
       <div className="flex flex-col">
         <h1 className="text-3xl md:text-6xl text-white text-center">Quem esta Assistindo?</h1>
         <div className="flex items-center justify-center gap-8 mt-10">
-          <div onClick={() => selectProfile()}>
+          <div className="gap-10 flex flex-col items-center justify-center">
+            <div  onClick={() => selectProfile()}>
             <UserCard name={currentUser?.name} />
+            </div>
+            <button onClick={() => updateRote()} className="text-white bg-black p-3 text-lg">Atualizar Perfil</button>
           </div>
+          
         </div>
+        
       </div>
     </div>
   );
