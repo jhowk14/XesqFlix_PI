@@ -56,11 +56,9 @@ const Navbar = () => {
         </Link>
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <NavbarItem label="Home" active href='/' />
-          <NavbarItem label="Series" href='/'/>
-          <NavbarItem label="Films" href='/'/>
-          <NavbarItem label="New & Popular" href='/'/>
-          <NavbarItem label="My List" href='/'/>
-          <NavbarItem label="Browse by Languages" href='/'/>
+          <NavbarItem label="My List" href='/my-list'/>
+          <NavbarItem label="Perfil" href='/profiles'/>
+          <NavbarItem label="Atualizar Perfil" href='/update-profile'/>
         </div>
         <div onClick={toggleMobileMenu} className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative">
           <p className="text-white text-sm">Browse</p>

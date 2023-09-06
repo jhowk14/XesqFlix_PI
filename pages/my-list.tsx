@@ -27,8 +27,8 @@ export async function getServerSideProps(context: NextPageContext) {
   }
 }
 
-const Home = () => {
-  const { data: movies = [] } = useMovieList();
+const Mylist = () => {
+  const { data: favorites = [] } = useFavorites();
   const {isOpen, closeModal} = useInfoModalStore();
 
   return (
@@ -37,10 +37,10 @@ const Home = () => {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MovieList title="Em Alta" data={movies} />
+        <MovieList title="My List" data={favorites} />
       </div>
     </>
   )
 }
 
-export default Home;
+export default Mylist;
