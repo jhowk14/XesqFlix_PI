@@ -21,7 +21,7 @@ const AvatarModal: React.FC<AvatarModalProps> = ({
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 m-4">
-      <div className="bg-black p-4 rounded-lg shadow-lg">
+      <div className="bg-black bg-opacity-80 p-4 rounded-lg shadow-lg">
         <h2 className="text-xl font-semibold mb-4">Escolha um avatar</h2>
         <div className="grid grid-cols-5 gap-4">
           {avatars.map((avatar, index) => (
