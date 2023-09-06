@@ -18,7 +18,8 @@ const SrcImages = [
   '/images/moy.png',
   '/images/raul.png',
   '/images/Winckler.png',
-  '/images/jhow.png'
+  '/images/jhow.png',
+  '/images/Gui.png'
 ]
 
 export async function getServerSideProps(context: NextPageContext) {
