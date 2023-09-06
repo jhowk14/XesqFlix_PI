@@ -37,7 +37,7 @@ const Mylist = () => {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MovieList title="My List" data={favorites} />
+        <MovieList title="Minha lista" data={favorites} />
       </div>
     </>
   )

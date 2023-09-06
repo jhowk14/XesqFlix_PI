@@ -56,7 +56,7 @@ const Navbar = () => {
         </Link>
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <NavbarItem label="Home" active href='/' />
-          <NavbarItem label="My List" href='/my-list'/>
+          <NavbarItem label="Minha lista" href='/my-list'/>
           <NavbarItem label="Perfil" href='/profiles'/>
           <NavbarItem label="Atualizar Perfil" href='/update-profile'/>
         </div>
