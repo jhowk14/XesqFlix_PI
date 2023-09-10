@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
-  
+  const {data} = await axios.get(`http://localhost:3000/api/admin/user/email/${session?.user?.email}`)
   if (!session) {
     return {
       redirect: {
@@ -18,7 +18,14 @@ export async function getServerSideProps(context: NextPageContext) {
       }
     }
   }
-
+  else if (!data.data.admin || data.data.admin == false){
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
+    }
+  }
   return {
     props: {}
   };
