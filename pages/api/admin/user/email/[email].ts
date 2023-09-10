@@ -1,12 +1,18 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from '@/libs/prismadb';
+import serverAuth from '@/libs/serverAuth';
 
 
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
+
+
     try {
+      if (req.method !== 'GET') {
+        return res.status(405).end();
+      }
+      await serverAuth(req, res);
       const { email } = req.query
       const users = await prismadb.user.findUnique({
         where: {email: String(email)}
@@ -19,10 +25,4 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         error: 'Ocorreu um erro ao obter os usuários.',
       });
     }
-  } 
-  else {
-    return res.status(405).json({
-      error: 'Método não permitido.',
-    });
-  }
 }
