@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
-  const {data} = await axios.get(`/api/admin/user/email/${session?.user?.email}`)
+  const {data} = await axios.get(`xesqflix.vercel.app/api/admin/user/email/${session?.user?.email}`)
   if (!session) {
     return {
       redirect: {
