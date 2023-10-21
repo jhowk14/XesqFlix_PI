@@ -31,7 +31,7 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-export default function Home() {
+export default function CreateMovie() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [genre, setGenre] = useState('');
